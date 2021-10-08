@@ -1,0 +1,64 @@
+Create database Test;
+use Test;
+
+CREATE table Category(
+    id int auto_increment primary key ,
+    name nvarchar(100),
+    status boolean
+);
+create table Product(
+                        id int auto_increment primary key ,
+                        name nvarchar(100) ,
+                        price float,
+                        quantity int,
+                        color nvarchar(100),
+                        description nvarchar(100),
+                        id_Category int,
+                        foreign key (id_Category) references Category(id)
+);
+
+insert  into  category(name, status) VALUES ('Iphone',true);
+insert  into  category(name, status) VALUES ('SamSung',true);
+insert  into  category(name, status) VALUES ('Nokia',true);
+
+SELECT * from category;
+
+insert into product(name, price, quantity, color, description, id_Category) values ('Iphone6',60000,10,'white','Đẹp',1);
+insert into product(name, price, quantity, color, description, id_Category) values ('Iphone7',60000,10,'white','Đẹp',1);
+insert into product(name, price, quantity, color, description, id_Category) values ('Iphone8',60000,10,'white','Đẹp',1);
+insert into product(name, price, quantity, color, description, id_Category) values ('Iphone10',60000,10,'white','Đẹp',1);
+SELECT * from product;
+/*==================insertProduct==================*/
+Delimiter //
+create procedure insertProduct(in pname nvarchar(100),pprice float,pquantity int,pcolor nvarchar(100),pdescription nvarchar(100),pid_Category int)
+begin
+    insert into product(name, price, quantity, color, description, id_Category) values (pname,pprice,pquantity,pcolor,pdescription,pid_Category);
+end //
+Delimiter //
+
+call insertProduct('Iphone12',60000,10,'white','Đẹp',1);
+SELECT * from product;
+/*===================updateProduct=================*/
+Delimiter //
+create procedure updateProduct(in pid int, pname nvarchar(100),pprice float,pquantity int,pcolor nvarchar(100),pdescription nvarchar(100),pid_Category int)
+begin
+   update Product
+       SET name = pname,price = pprice,quantity = pquantity,color = pcolor,description = pdescription, id_Category = pid_Category
+    WHERE id = pid;
+end //
+Delimiter //
+
+call updateProduct(1,'Iphone18',60000,10,'white','Đẹp',1);
+SELECT * from product;
+/*=====================deleteProduct===============*/
+
+Delimiter //
+create procedure deleteProduct(in pid int)
+begin
+    delete from Product WHERE id = pid;
+end //
+Delimiter //
+
+call deleteProduct(1);
+SELECT * from product;
+
