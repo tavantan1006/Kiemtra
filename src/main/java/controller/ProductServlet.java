@@ -24,7 +24,7 @@ public class ProductServlet extends HttpServlet {
         }
         switch (action) {
             case "detail":{
-                ShowBannerDetail(request,response);
+                ShowProductDetail(request,response);
                 break;
             }
             case "create":{
@@ -42,7 +42,7 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void ShowBannerDetail(HttpServletRequest request, HttpServletResponse response) {
+    private void ShowProductDetail(HttpServletRequest request, HttpServletResponse response) {
         int id  = Integer.parseInt(request.getParameter("id"));
         Product product = productService.getById(id);
         List<Category> categories = productService.getAllCategory();
